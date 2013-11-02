@@ -1,10 +1,10 @@
 require("jsb.js");
 require("src/GameMaps.js");
-require("src/myApp.js");
 require("src/Monster.js");
 require("src/resource.js");
 require("src/Tower.js");
 require("src/GameLayer.js");
+require("src/Quadtree.js");
 
 // main entry
 try {
