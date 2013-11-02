@@ -54,8 +54,8 @@ var HighBullet = cc.Node.extend({
 		monster.lostBlood(10);
 		this._atkMonsters.push(monster);
 	},
-	showAttackRange: function(bValue){
-		if (bValue){
+	showAttackRange: function(value){
+		if (value){
 			if (!this._sAttackRange){
 				this._sAttackRange = cc.Sprite.create(s_AttackRange);
 				this.addChild(this._sAttackRange, -1);
@@ -85,9 +85,9 @@ var HighBullet = cc.Node.extend({
 });
 
 HighBullet.create = function(){
-	var bullet = new HighBullet();
-	bullet.init(s_HighBullet);
-	return bullet;
+	var highBullet = new HighBullet();
+	highBullet.init(s_HighBullet);
+	return highBullet;
 };
 
 var Tower = cc.Layer.extend({
@@ -176,12 +176,12 @@ var Tower = cc.Layer.extend({
 		// create bullet
 		if (this._gameLayer){
 			if (!this._isLow){
-				var bullet = HighBullet.create();
-				bullet.getSprite().setPosition(
+				var highBullet = HighBullet.create();
+				highBullet.getSprite().setPosition(
 					cc.pAdd(this.getPosition(),
 							this._sBall.getPosition()));
 
-				this._gameLayer.addHighBullet(bullet);
+				this._gameLayer.addHighBullet(highBullet);
 
 				var towerPosition  = this.getPosition();
 				var monsterPosition = monster.getSprite().getPosition();
@@ -189,16 +189,16 @@ var Tower = cc.Layer.extend({
 
 				var move = cc.MoveBy.create(
 					distance / 200,
-					cc.pSub(monster.getSprite().getPosition(), bullet.getSprite().getPosition()));
+					cc.pSub(monster.getSprite().getPosition(), highBullet.getSprite().getPosition()));
 				var action = cc.RepeatForever.create(move);
 
 				var winSize = cc.Director.getInstance().getWinSize();
 				var winSizePoint = cc.p(winSize.width, winSize.height);
 				var maxDistance = cc.pDistance(cc.p(0, 0), winSizePoint);
-				bullet.setLifeTime(maxDistance / 200);
+				highBullet.setLifeTime(maxDistance / 200);
 
 
-				bullet.getSprite().runAction(action);
+				highBullet.getSprite().runAction(action);
 			}
 			
 			if (this._isLow){
