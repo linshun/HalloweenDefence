@@ -3,7 +3,7 @@ var GameLayer = cc.Layer.extend({
 	_winSize: null,
 
 	_towerLayer: null,
-	_hShellLayer: null,
+	_shellLayer: null,
 	_monsterLayer: null,
 	
 	_showRange: false,
@@ -58,52 +58,52 @@ var GameLayer = cc.Layer.extend({
 	initToolsBar: function(){
 		var toolLayer = cc.Layer.create();
 		
-		var sToolsBar = cc.Sprite.create(s_ToolsBar);
-		sToolsBar.setPosition(cc.p(this._winSize.width / 2, sToolsBar.getContentSize().height / 2));
-		toolLayer.addChild(sToolsBar);
+		var toolsBar = cc.Sprite.create(s_ToolsBar);
+		toolsBar.setPosition(cc.p(this._winSize.width / 2, toolsBar.getContentSize().height / 2));
+		toolLayer.addChild(toolsBar);
 		this.addChild(toolLayer, 2);
 
-		// add monster menuitem
-		var mGreen = cc.Sprite.create(s_Monster[0]);
-		var mGreenSelected = cc.Sprite.create(s_Monster[0]);
-		mGreenSelected.setColor(cc.c4b(125, 125, 125, 125));
+		// add monster menu item
+		var green = cc.Sprite.create(s_Monster[0]);
+		var greenSelected = cc.Sprite.create(s_Monster[0]);
+		greenSelected.setColor(cc.c4b(125, 125, 125, 125));
 		var menuMonsterGreen = cc.MenuItemSprite.create(
-			mGreen,
-			mGreenSelected,
+			green,
+			greenSelected,
 			function(){
  				this.addMonster(Monster.createGreen());
 			}, this);
 		menuMonsterGreen.setPosition(cc.p(118, -245 * 0.6));
 
-		var mPurple = cc.Sprite.create(s_Monster[1]);
-		var mPurpleSelected = cc.Sprite.create(s_Monster[1]);
-		mPurpleSelected.setColor(cc.c4b(125, 125, 125, 125));
+		var purple = cc.Sprite.create(s_Monster[1]);
+		var purpleSelected = cc.Sprite.create(s_Monster[1]);
+		purpleSelected.setColor(cc.c4b(125, 125, 125, 125));
 		var menuMonsterPurple = cc.MenuItemSprite.create(
-			mPurple,
-			mPurpleSelected,
+			purple,
+			purpleSelected,
 			function(){
 				this.addMonster(Monster.createPurple());				
 			}, this);
 		menuMonsterPurple.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(48, 0)));
 
-		var mOrange = cc.Sprite.create(s_Monster[2]);
-		var mOrangeSelected = cc.Sprite.create(s_Monster[2]);
-		mOrangeSelected.setColor(cc.c4b(125, 125, 125, 125));
+		var orange = cc.Sprite.create(s_Monster[2]);
+		var orangeSelected = cc.Sprite.create(s_Monster[2]);
+		orangeSelected.setColor(cc.c4b(125, 125, 125, 125));
 		var menuMonsterOrange = cc.MenuItemSprite.create(
-			mOrange, 
-			mOrangeSelected,
+			orange,
+			orangeSelected,
 			function(){
 				this.addMonster(Monster.createOrange());			
 			}, this);
 		menuMonsterOrange.setPosition(cc.pAdd(menuMonsterPurple.getPosition(), cc.p(48, 0)));
 
-		var mShowAttackRange = cc.MenuItemFont.create("Show Range", function(){
+		var showAttackRange = cc.MenuItemFont.create("Show Range", function(){
 			this._showRange = !this._showRange;
 
 			if (this._towersLayer){
 				var towers = this._towersLayer.getChildren();
 				if (towers){
-					for(var i = 0, ilen = towers.length; i < ilen; i++){
+					for(var i = 0, iLen = towers.length; i < iLen; i++){
 						towers[i].showAttackRange(this._showRange);
 					}
 				}
@@ -112,42 +112,42 @@ var GameLayer = cc.Layer.extend({
 			if (this._monsterLayer){
 				var monster = this._monsterLayer.getChildren();
 				if (monster){
-					for(var j = 0, jlen = monster.length; j < jlen; j++){
+					for(var j = 0, jLen = monster.length; j < jLen; j++){
 						monster[j].showAttackedRange(this._showRange);
 					}
 				}
 			}
 
-			if (this._hShellLayer){
-				var hShells = this._hShellLayer.getChildren();
-				if (hShells){
-					for(var k = 0, klen = hShells.length; k < klen; k++){
-						hShells[k].showAttackRange(this._showRange);
+			if (this._shellLayer){
+				var shells = this._shellLayer.getChildren();
+				if (shells){
+					for(var k = 0, kLen = shells.length; k < kLen; k++){
+						shells[k].showAttackRange(this._showRange);
 					}
 				}
 			}
 
 		}, this);
-		mShowAttackRange.setFontSize(14);
-		mShowAttackRange.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(- 120, 5)));
+		showAttackRange.setFontSize(14);
+		showAttackRange.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(- 120, 5)));
 		
 		var menu = cc.Menu.create(
 			menuMonsterGreen,
 			menuMonsterPurple,
 			menuMonsterOrange,
-			mShowAttackRange
+			showAttackRange
 		);
 		
 		toolLayer.addChild(menu);
 	},
-	addHighShell: function(hShell){
-		if (!this._hShellLayer){
-			this._hShellLayer = cc.Layer.create();
-			this._hShellLayer.setPosition(cc.p(0, 0));
-			this.addChild(this._hShellLayer);
+	addHighShell: function(shell){
+		if (!this._shellLayer){
+			this._shellLayer = cc.Layer.create();
+			this._shellLayer.setPosition(cc.p(0, 0));
+			this.addChild(this._shellLayer);
 		}
-		hShell.showAttackRange(this._showRange);
-		this._hShellLayer.addChild(hShell);
+		shell.showAttackRange(this._showRange);
+		this._shellLayer.addChild(shell);
 	},
 	addMonster: function(monster){
 		if (!this._monsterLayer){
@@ -176,7 +176,7 @@ var GameLayer = cc.Layer.extend({
 		var location = this._maps.getPositionByPoint(point);
 		// check tower point
 		var towers = this._towersLayer.getChildren();
-		for(var i = 0, ilen = towers.length; i < ilen; i++){
+		for(var i = 0, iLen = towers.length; i < iLen; i++){
 			var tower = towers[i];
 			if (cc.pointEqualToPoint(tower.getPosition(), location)){
 				return null;
@@ -199,30 +199,30 @@ var GameLayer = cc.Layer.extend({
 			this._quad.insert(monsters[i]);
 		}
 
-		for(var i = 0, ilen = towers.length; i < ilen; i++){
+		for(var i = 0, iLen = towers.length; i < iLen; i++){
 			var tower = towers[i];
 			var list = [];
 			this._quad.retrieve(list, tower);
 			// cc.log("length:" + list.length);
-			for(var j = 0, jlen = list.length; j < jlen; j++){
+			for(var j = 0, jLen = list.length; j < jLen; j++){
 				towers[i].checkAttack(list[j]);
 			}
 		}
 
 		// // high shell check
-		if (!this._hShellLayer)
+		if (!this._shellLayer)
 			return;
-		var hShells = this._hShellLayer.getChildren();
-		if (!hShells) return;
-		for(var i = 0, ilen = hShells.length; i < ilen; i++){
-			var hShell = hShells[i];
+		var shells = this._shellLayer.getChildren();
+		if (!shells) return;
+		for(var i = 0, iLen = shells.length; i < iLen; i++){
+			var hShell = shells[i];
 			var list = [];
 			this._quad.retrieve(list, hShell);
-			for (var j = 0, jlen = list.length; j < jlen; j++){
+			for (var j = 0, jLen = list.length; j < jLen; j++){
 				hShell.checkAttack(list[j]);
 			}
 		}
-		// cc.log("end update:" + hShells.length);
+		// cc.log("end update:" + shells.length);
 	},
 	autoAddMonster: function(){
 		var value = Math.random() * 3;

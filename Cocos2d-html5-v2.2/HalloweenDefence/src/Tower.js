@@ -114,20 +114,20 @@ var Tower = cc.Layer.extend({
 		// set attack range
 		this.radius = this._attackRange = attackRange;
 
-		var sTower = this._sprite = cc.Sprite.create(filename);
-		this.addChild(sTower);
+		var tower = this._sprite = cc.Sprite.create(filename);
+		this.addChild(tower);
 
-		var size = sTower.getTexture().getContentSize();
+		var size = tower.getTexture().getContentSize();
 		this._rect = cc.rect(0, 0, size.width, size.height);
 
-		var sBall = this._sBall = cc.Sprite.create(ball);
-		sBall.setPosition(cc.p(0, 22));
-		this.addChild(sBall);
+		var ball = this._sBall = cc.Sprite.create(ball);
+		ball.setPosition(cc.p(0, 22));
+		this.addChild(ball);
 
 		// ball action
 		var move = cc.MoveBy.create(1.2, cc.p(0, 6));
 		var moveBack = move.reverse();
-		sBall.runAction(cc.RepeatForever.create(
+		ball.runAction(cc.RepeatForever.create(
 			cc.Sequence.create(move, moveBack)));
 
 		// show attack range
@@ -176,29 +176,29 @@ var Tower = cc.Layer.extend({
 		// create shell
 		if (this._gameLayer){
 			if (!this._isLow){
-				var hShell = HighShell.create();
-				hShell.getSprite().setPosition(
+				var shell = HighShell.create();
+				shell.getSprite().setPosition(
 					cc.pAdd(this.getPosition(),
 							this._sBall.getPosition()));
 
-				this._gameLayer.addHighShell(hShell);
+				this._gameLayer.addHighShell(shell);
 
 				var towerPosition  = this.getPosition();
 				var monsterPosition = monster.getSprite().getPosition();
-				var tmDistance = cc.pDistance(towerPosition, monsterPosition);
+				var distance = cc.pDistance(towerPosition, monsterPosition);
 
-				var hMove = cc.MoveBy.create(
-					tmDistance / 200,
-					cc.pSub(monster.getSprite().getPosition(), hShell.getSprite().getPosition()));
-				var rfAction = cc.RepeatForever.create(hMove);
+				var move = cc.MoveBy.create(
+					distance / 200,
+					cc.pSub(monster.getSprite().getPosition(), shell.getSprite().getPosition()));
+				var action = cc.RepeatForever.create(move);
 
 				var winSize = cc.Director.getInstance().getWinSize();
 				var winSizePoint = cc.p(winSize.width, winSize.height);
 				var maxDistance = cc.pDistance(cc.p(0, 0), winSizePoint);
-				hShell.setLifeTime(maxDistance / 200);
+				shell.setLifeTime(maxDistance / 200);
 
 
-				hShell.getSprite().runAction(rfAction);
+				shell.getSprite().runAction(action);
 			}
 			
 			if (this._isLow){
@@ -225,8 +225,8 @@ var Tower = cc.Layer.extend({
 	getCurrentTime: function(){
 		return (new Date()).valueOf();
 	},
-	showAttackRange: function(bValue){
-		if (bValue){
+	showAttackRange: function(value){
+		if (value){
 			if (!this._sAttackRange){
 				this._sAttackRange = cc.Sprite.create(s_AttackRange);
 				this.addChild(this._sAttackRange, -1);

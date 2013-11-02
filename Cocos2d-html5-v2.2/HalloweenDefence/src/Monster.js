@@ -75,8 +75,8 @@ var Monster = cc.Node.extend({
 	getAttackedRange: function(){
 		return this._attackedRange;
 	},
-	showAttackedRange: function(bValue){
-		if (bValue){
+	showAttackedRange: function(value){
+		if (value){
 			if (!this._sAttackedRange){
 				this._sAttackedRange = cc.Sprite.create(s_AttackRange);
 				this._bloodNode.addChild(this._sAttackedRange);
