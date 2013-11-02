@@ -3,7 +3,7 @@ var GameLayer = cc.Layer.extend({
 	_winSize: null,
 
 	_towerLayer: null,
-	_shellLayer: null,
+	_bulletLayer: null,
 	_monsterLayer: null,
 	
 	_showRange: false,
@@ -118,11 +118,11 @@ var GameLayer = cc.Layer.extend({
 				}
 			}
 
-			if (this._shellLayer){
-				var shells = this._shellLayer.getChildren();
-				if (shells){
-					for(var k = 0, kLen = shells.length; k < kLen; k++){
-						shells[k].showAttackRange(this._showRange);
+			if (this._bulletLayer){
+				var bullets = this._bulletLayer.getChildren();
+				if (bullets){
+					for(var k = 0, kLen = bullets.length; k < kLen; k++){
+						bullets[k].showAttackRange(this._showRange);
 					}
 				}
 			}
@@ -140,14 +140,14 @@ var GameLayer = cc.Layer.extend({
 		
 		toolLayer.addChild(menu);
 	},
-	addHighShell: function(shell){
-		if (!this._shellLayer){
-			this._shellLayer = cc.Layer.create();
-			this._shellLayer.setPosition(cc.p(0, 0));
-			this.addChild(this._shellLayer);
+	addHighBullet: function(bullet){
+		if (!this._bulletLayer){
+			this._bulletLayer = cc.Layer.create();
+			this._bulletLayer.setPosition(cc.p(0, 0));
+			this.addChild(this._bulletLayer);
 		}
-		shell.showAttackRange(this._showRange);
-		this._shellLayer.addChild(shell);
+		bullet.showAttackRange(this._showRange);
+		this._bulletLayer.addChild(bullet);
 	},
 	addMonster: function(monster){
 		if (!this._monsterLayer){
@@ -189,7 +189,7 @@ var GameLayer = cc.Layer.extend({
 			!this._monsterLayer)
 			return;
 		
-		// low shell check
+		// low bullet check
 		var monsters = this._monsterLayer.getChildren();
 		var towers = this._towersLayer.getChildren();
 		if (!monsters || !towers) return;
@@ -209,20 +209,20 @@ var GameLayer = cc.Layer.extend({
 			}
 		}
 
-		// // high shell check
-		if (!this._shellLayer)
+		// // high bullet check
+		if (!this._bulletLayer)
 			return;
-		var shells = this._shellLayer.getChildren();
-		if (!shells) return;
-		for(var i = 0, iLen = shells.length; i < iLen; i++){
-			var hShell = shells[i];
+		var bullets = this._bulletLayer.getChildren();
+		if (!bullets) return;
+		for(var i = 0, iLen = bullets.length; i < iLen; i++){
+			var highBullet = bullets[i];
 			var list = [];
-			this._quad.retrieve(list, hShell);
+			this._quad.retrieve(list, highBullet);
 			for (var j = 0, jLen = list.length; j < jLen; j++){
-				hShell.checkAttack(list[j]);
+				highBullet.checkAttack(list[j]);
 			}
 		}
-		// cc.log("end update:" + shells.length);
+		// cc.log("end update:" + bullets.length);
 	},
 	autoAddMonster: function(){
 		var value = Math.random() * 3;

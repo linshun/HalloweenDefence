@@ -1,6 +1,6 @@
 // Tower.js
 
-var HighShell = cc.Node.extend({
+var HighBullet = cc.Node.extend({
 	_lifeTime: null,
 	_initTime: null,
 	_attackRange: null,
@@ -75,7 +75,7 @@ var HighShell = cc.Node.extend({
 	update: function(dt){
 		var curT = (new Date()).valueOf();
 		if(curT - this._initTime >= this._lifeTime * 1000){
-			// cc.log("shell die");
+			// cc.log("bullet die");
 			this.removeFromParent();
 		}
 		if (this._sAttackRange){
@@ -84,10 +84,10 @@ var HighShell = cc.Node.extend({
 	}
 });
 
-HighShell.create = function(){
-	var shell = new HighShell();
-	shell.init(s_HighShell);
-	return shell;
+HighBullet.create = function(){
+	var bullet = new HighBullet();
+	bullet.init(s_HighBullet);
+	return bullet;
 };
 
 var Tower = cc.Layer.extend({
@@ -173,15 +173,15 @@ var Tower = cc.Layer.extend({
 		this.attackMonster(monster);
 	},
 	attackMonster: function(monster){
-		// create shell
+		// create bullet
 		if (this._gameLayer){
 			if (!this._isLow){
-				var shell = HighShell.create();
-				shell.getSprite().setPosition(
+				var bullet = HighBullet.create();
+				bullet.getSprite().setPosition(
 					cc.pAdd(this.getPosition(),
 							this._sBall.getPosition()));
 
-				this._gameLayer.addHighShell(shell);
+				this._gameLayer.addHighBullet(bullet);
 
 				var towerPosition  = this.getPosition();
 				var monsterPosition = monster.getSprite().getPosition();
@@ -189,31 +189,31 @@ var Tower = cc.Layer.extend({
 
 				var move = cc.MoveBy.create(
 					distance / 200,
-					cc.pSub(monster.getSprite().getPosition(), shell.getSprite().getPosition()));
+					cc.pSub(monster.getSprite().getPosition(), bullet.getSprite().getPosition()));
 				var action = cc.RepeatForever.create(move);
 
 				var winSize = cc.Director.getInstance().getWinSize();
 				var winSizePoint = cc.p(winSize.width, winSize.height);
 				var maxDistance = cc.pDistance(cc.p(0, 0), winSizePoint);
-				shell.setLifeTime(maxDistance / 200);
+				bullet.setLifeTime(maxDistance / 200);
 
 
-				shell.getSprite().runAction(action);
+				bullet.getSprite().runAction(action);
 			}
 			
 			if (this._isLow){
-				var shell = cc.Sprite.create(s_Shell);
-				shell.setPosition(
+				var bullet = cc.Sprite.create(s_Bullet);
+				bullet.setPosition(
 					cc.pAdd(this.getPosition(),
 							this._sBall.getPosition()));
-				this._gameLayer.addChild(shell);
+				this._gameLayer.addChild(bullet);
 
 				var move = cc.MoveTo.create(0.1, monster.getSprite().getPosition());
-				shell.runAction(cc.Sequence.create(
+				bullet.runAction(cc.Sequence.create(
 					move,
 					cc.CallFunc.create(function(){
-						shell.removeFromParent();
-					}, shell)
+						bullet.removeFromParent();
+					}, bullet)
 				));
 				monster.lostBlood(20);
 			}

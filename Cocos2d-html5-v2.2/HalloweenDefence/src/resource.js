@@ -4,8 +4,8 @@ var s_ToolsBar = "res/ToolsBar.png";
 
 var s_Blood = "res/Blood.png";
 var s_BloodBackground = "res/BloodBackground.png";
-var s_Shell = "res/Shell.png";
-var s_HighShell = "res/HighShell.png";
+var s_Bullet = "res/Shell.png";
+var s_HighBullet = "res/HighShell.png";
 var s_AttackRange = "res/AttackRange.png";
 
 var s_Monster = [
@@ -32,8 +32,8 @@ var g_resources = [
 
 	{src:s_Blood},
 	{src:s_BloodBackground},
-	{src:s_Shell},
-	{src:s_HighShell},
+	{src:s_Bullet},
+	{src:s_HighBullet},
 	{src:s_AttackRange},
 
 	{src:s_Monster[0]},
