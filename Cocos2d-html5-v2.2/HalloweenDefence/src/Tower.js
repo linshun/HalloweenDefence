@@ -6,14 +6,16 @@ var HighBullet = cc.Node.extend({
 	_attackRange: null,
 
 	_sprite: null,
+	_attack: null,
 
 	_atkMonsters: null,
 	
-	init: function(image){
+	init: function(image, attack){
 		this._sprite = cc.Sprite.create(image);
 		this.addChild(this._sprite);
 		
 		this._initTime = (new Date()).valueOf();
+		this._attack = attack;
 		this.schedule(this.update, 0);
 
 		this.radius = this._attackRange = 7;
@@ -51,10 +53,10 @@ var HighBullet = cc.Node.extend({
 				return;
 		}
 		// was attacked
-		monster.lostBlood(10);
+		monster.lostBlood(this._attack);
 		this._atkMonsters.push(monster);
 	},
-	showAttackRange: function(value){
+	showRange: function(value){
 		if (value){
 			if (!this._sAttackRange){
 				this._sAttackRange = cc.Sprite.create(s_AttackRange);
@@ -84,9 +86,9 @@ var HighBullet = cc.Node.extend({
 	}
 });
 
-HighBullet.create = function(){
+HighBullet.create = function(attack){
 	var highBullet = new HighBullet();
-	highBullet.init(s_HighBullet);
+	highBullet.init(s_HighBullet, attack);
 	return highBullet;
 };
 
@@ -95,6 +97,7 @@ var Tower = cc.Layer.extend({
 	_isLow: false,
 
 	_speed: null,
+	_attack: null,
 	_preAttackTime: null,
 	_attackRange: null,
 
@@ -104,11 +107,12 @@ var Tower = cc.Layer.extend({
 	_sprite: null,
 	_rect: null,
 	
-	init: function(filename, ball, attackRange, speed){
+	init: function(filename, ball, attackRange, speed, attack){
 		this._super();
 
 		// set speed
 		this._speed = speed;
+		this._attack = attack;
 		this._preAttackTime = this.getCurrentTime();
 
 		// set attack range
@@ -129,9 +133,6 @@ var Tower = cc.Layer.extend({
 		var moveBack = move.reverse();
 		ball.runAction(cc.RepeatForever.create(
 			cc.Sequence.create(move, moveBack)));
-
-		// show attack range
-		// this.showAttackRange(true);
 
 	},
 	getPos: function(){
@@ -176,7 +177,7 @@ var Tower = cc.Layer.extend({
 		// create bullet
 		if (this._gameLayer){
 			if (!this._isLow){
-				var highBullet = HighBullet.create();
+				var highBullet = HighBullet.create(this._attack);
 				highBullet.getSprite().setPosition(
 					cc.pAdd(this.getPosition(),
 							this._sBall.getPosition()));
@@ -197,8 +198,11 @@ var Tower = cc.Layer.extend({
 				var maxDistance = cc.pDistance(cc.p(0, 0), winSizePoint);
 				highBullet.setLifeTime(maxDistance / 200);
 
-
 				highBullet.getSprite().runAction(action);
+
+				if (HD.SOUND){
+					cc.AudioEngine.getInstance().playEffect(s_AttackHighEffect_mp3);
+				}				
 			}
 			
 			if (this._isLow){
@@ -215,7 +219,11 @@ var Tower = cc.Layer.extend({
 						bullet.removeFromParent();
 					}, bullet)
 				));
-				monster.lostBlood(20);
+				monster.lostBlood(this._attack);
+				
+				if (HD.SOUND){
+					cc.AudioEngine.getInstance().playEffect(s_AttackEffect_mp3);
+				}				
 			}
 		}
 	},
@@ -225,7 +233,7 @@ var Tower = cc.Layer.extend({
 	getCurrentTime: function(){
 		return (new Date()).valueOf();
 	},
-	showAttackRange: function(value){
+	showRange: function(value){
 		if (value){
 			if (!this._sAttackRange){
 				this._sAttackRange = cc.Sprite.create(s_AttackRange);
@@ -291,20 +299,20 @@ var Tower = cc.Layer.extend({
 	}
 });
 
-Tower.create = function(filename, ball, speed){
+Tower.create = function(filename, ball, speed, attack){
 	var tower = new Tower();
-	tower.init(filename, ball, 90, speed);
+	tower.init(filename, ball, 90, speed, attack);
 	return tower;
 };
 
 Tower.createLow = function(){
-	var tower = Tower.create(s_Tower[0], s_TowerBall[0], 300);
+	var tower = Tower.create(s_Tower[0], s_TowerBall[0], 300, 20);
 	tower._isLow = true;
 	return tower;
 };
 
 Tower.createHigh = function(){
-	var tower = Tower.create(s_Tower[1], s_TowerBall[1], 700);
+	var tower = Tower.create(s_Tower[1], s_TowerBall[1], 1000, 30);
 	tower._isLow = false;	
 	return tower;
 };

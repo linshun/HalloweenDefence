@@ -8,6 +8,11 @@ var s_Bullet = "res/Shell.png";
 var s_HighBullet = "res/HighShell.png";
 var s_AttackRange = "res/AttackRange.png";
 
+var s_AttackEffect_mp3 = "res/Music/AttackEffect.mp3";
+var s_AttackHighEffect_mp3 = "res/Music/AttackHighEffect.mp3";
+var s_MonsterDie_mp3 = "res/Music/MonsterDie.mp3";
+var s_MonsterAcross_mp3 = "res/Music/MonsterAcross.mp3";
+
 var s_Monster = [
 	"res/Monster-1.png",
 	"res/Monster-2.png",
@@ -44,7 +49,12 @@ var g_resources = [
 	{src:s_Tower[1]},
 
 	{src:s_TowerBall[0]},
-	{src:s_TowerBall[1]}
+	{src:s_TowerBall[1]},
+
+	{src:s_AttackEffect_mp3},
+	{src:s_AttackHighEffect_mp3},
+	{src:s_MonsterDie_mp3},
+	{src:s_MonsterAcross_mp3}
 
     //plist
 

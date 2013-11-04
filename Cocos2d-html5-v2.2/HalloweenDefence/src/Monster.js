@@ -66,6 +66,10 @@ var Monster = cc.Node.extend({
 				}, this)
 			));
 			this._isDie = true;
+
+			if (HD.SOUND){
+				cc.AudioEngine.getInstance().playEffect(s_MonsterDie_mp3);
+			}
 		}
 		this._sBlood.setScaleX(this._blood / this._maxBlood);
 	},
@@ -75,7 +79,7 @@ var Monster = cc.Node.extend({
 	getAttackedRange: function(){
 		return this._attackedRange;
 	},
-	showAttackedRange: function(value){
+	showRange: function(value){
 		if (value){
 			if (!this._sAttackedRange){
 				this._sAttackedRange = cc.Sprite.create(s_AttackRange);
