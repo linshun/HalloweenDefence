@@ -5,8 +5,6 @@ var GameLayer = cc.Layer.extend({
 	_towerLayer: null,
 	_bulletLayer: null,
 	_monsterLayer: null,
-	
-	_showRange: false,
 
 	_quad: null,
 
@@ -41,14 +39,14 @@ var GameLayer = cc.Layer.extend({
 		tower.setGameLayer(this);
 		var towerPoint = this._maps.getPositionByPoint(cc.p(4, 3));
 		tower.setPosition(towerPoint);
-		tower.showAttackRange(this._showRange);
+		tower.showRange(HD.SHOW_RANGE);
 
 		var tower2 = Tower.createHigh();
 		tower2.setGameLayer(this);		
 		// var tower2Point = this._maps.getPositionByPoint(cc.p(6, 2));
 		var tower2Point = this._maps.getPositionByPoint(cc.p(3, 4));
 		tower2.setPosition(tower2Point);
-		tower2.showAttackRange(this._showRange);		
+		tower2.showRange(HD.SHOW_RANGE);
 
 		this._towersLayer = cc.Layer.create();
 		this._towersLayer.addChild(tower);
@@ -97,45 +95,38 @@ var GameLayer = cc.Layer.extend({
 			}, this);
 		menuMonsterOrange.setPosition(cc.pAdd(menuMonsterPurple.getPosition(), cc.p(48, 0)));
 
-		var showAttackRange = cc.MenuItemFont.create("Show Range", function(){
-			this._showRange = !this._showRange;
+		var menuShowRange = cc.MenuItemFont.create("Show Range", function(){
+			HD.SHOW_RANGE = !HD.SHOW_RANGE;
 
-			if (this._towersLayer){
-				var towers = this._towersLayer.getChildren();
-				if (towers){
-					for(var i = 0, iLen = towers.length; i < iLen; i++){
-						towers[i].showAttackRange(this._showRange);
-					}
+			var showRanges = function(layer){
+				if (!layer) return;
+				var objs = layer.getChildren();
+				if (!objs) return;
+				for(var i = 0, len = objs.length; i < len; i++){
+					objs[i].showRange(HD.SHOW_RANGE);
 				}
-			}
+			};
 
-			if (this._monsterLayer){
-				var monster = this._monsterLayer.getChildren();
-				if (monster){
-					for(var j = 0, jLen = monster.length; j < jLen; j++){
-						monster[j].showAttackedRange(this._showRange);
-					}
-				}
-			}
-
-			if (this._bulletLayer){
-				var bullets = this._bulletLayer.getChildren();
-				if (bullets){
-					for(var k = 0, kLen = bullets.length; k < kLen; k++){
-						bullets[k].showAttackRange(this._showRange);
-					}
-				}
-			}
+			showRanges(this._towersLayer);
+			showRanges(this._monsterLayer);
+			showRanges(this._bulletLayer);
 
 		}, this);
-		showAttackRange.setFontSize(14);
-		showAttackRange.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(- 120, 5)));
-		
+		menuShowRange.setFontSize(14);
+		menuShowRange.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(- 100, 5)));
+
+		var menuSound = cc.MenuItemFont.create("Sound", function(){
+			HD.SOUND = !HD.SOUND;
+		});
+		menuSound.setFontSize(14);
+		menuSound.setPosition(cc.pAdd(menuMonsterGreen.getPosition(), cc.p(- 100 * 2, 5)));
+
 		var menu = cc.Menu.create(
 			menuMonsterGreen,
 			menuMonsterPurple,
 			menuMonsterOrange,
-			showAttackRange
+			menuShowRange,
+			menuSound
 		);
 		
 		toolLayer.addChild(menu);
@@ -146,7 +137,7 @@ var GameLayer = cc.Layer.extend({
 			this._bulletLayer.setPosition(cc.p(0, 0));
 			this.addChild(this._bulletLayer);
 		}
-		bullet.showAttackRange(this._showRange);
+		bullet.showRange(HD.SHOW_RANGE);
 		this._bulletLayer.addChild(bullet);
 	},
 	addMonster: function(monster){
@@ -160,10 +151,13 @@ var GameLayer = cc.Layer.extend({
 		var array = this._maps.getWayPositions();
 		var action1 = cc.CardinalSplineTo.create(20, array, 0);
 		var remove = cc.CallFunc.create(function(){
+			if (HD.SOUND){
+				cc.AudioEngine.getInstance().playEffect(s_MonsterAcross_mp3);
+			}
+
 			this.removeFromParent();
-			// cc.log("remove monster");
 		}, monster);
-		monster.showAttackedRange(this._showRange);
+		monster.showRange(HD.SHOW_RANGE);
 		
 		monster.getSprite().runAction(cc.Sequence.create(action1, remove));
 	},
@@ -245,3 +239,6 @@ var GameScene = cc.Scene.extend({
 });
 
 
+var HD = HD || {};
+HD.SOUND = true;
+HD.SHOW_RANGE = false;
