@@ -27,43 +27,42 @@ var s_MonsterAcross_mp3 = "res/Music/MonsterAcross.mp3";
 var s_MonsterAcross_ogg = "res/Music/MonsterAcross.ogg";
 
 
-
 var s_Monster = [
-	"res/Monster-1.png",
-	"res/Monster-2.png",
-	"res/Monster-3.png"
+    "res/Monster-1.png",
+    "res/Monster-2.png",
+    "res/Monster-3.png"
 ];
 
 var s_Tower = [
-	"res/Tower-1.png",
-	"res/Tower-2.png"
+    "res/Tower-1.png",
+    "res/Tower-2.png"
 ];
 
 var s_TowerBall = [
-	"res/Tower-ball-1.png",
-	"res/Tower-ball-2.png"
+    "res/Tower-ball-1.png",
+    "res/Tower-ball-2.png"
 ];
 
 var g_resources = [
     //image
-	{src:s_DtMapsImage},
-	{src:s_ToolsBar},
+    {src:s_DtMapsImage},
+    {src:s_ToolsBar},
 
-	{src:s_Blood},
-	{src:s_BloodBackground},
-	{src:s_Bullet},
-	{src:s_HighBullet},
-	{src:s_AttackRange},
+    {src:s_Blood},
+    {src:s_BloodBackground},
+    {src:s_Bullet},
+    {src:s_HighBullet},
+    {src:s_AttackRange},
 
-	{src:s_Monster[0]},
-	{src:s_Monster[1]},
-	{src:s_Monster[2]},
+    {src:s_Monster[0]},
+    {src:s_Monster[1]},
+    {src:s_Monster[2]},
 
-	{src:s_Tower[0]},
-	{src:s_Tower[1]},
+    {src:s_Tower[0]},
+    {src:s_Tower[1]},
 
-	{src:s_TowerBall[0]},
-	{src:s_TowerBall[1]},
+    {src:s_TowerBall[0]},
+    {src:s_TowerBall[1]},
 
     {src:s_Lose},
     {src:s_Start},
@@ -74,13 +73,13 @@ var g_resources = [
     {src:s_HalloweenDefence},
 
     //effect
-	{src:s_AttackEffect_mp3},
+    {src:s_AttackEffect_mp3},
     {src:s_AttackEffect_ogg},
     {src:s_AttackHighEffect_mp3},
     {src:s_AttackHighEffect_ogg},
-	{src:s_MonsterDie_mp3},
+    {src:s_MonsterDie_mp3},
     {src:s_MonsterDie_ogg},
-	{src:s_MonsterAcross_mp3},
+    {src:s_MonsterAcross_mp3},
     {src:s_MonsterAcross_ogg},
 
     //plist

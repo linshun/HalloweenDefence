@@ -35,13 +35,15 @@ var cocos2dApp = cc.Application.extend({
         cc.AppController.shareAppController().didFinishLaunchingWithOptions();
     },
     applicationDidFinishLaunching:function () {
-        if(cc.RenderDoesnotSupport()){
+        if (cc.RenderDoesnotSupport()) {
             //show Information to user
             alert("Browser doesn't support WebGL");
             return false;
         }
         // initialize director
         var director = cc.Director.getInstance();
+
+        //cc.EGLView.getInstance()._adjustSizeToBrowser();
 
         cc.EGLView.getInstance().setDesignResolutionSize(480, 318, cc.RESOLUTION_POLICY.SHOW_ALL);
 
@@ -59,4 +61,4 @@ var cocos2dApp = cc.Application.extend({
         return true;
     }
 });
-var myApp = new cocos2dApp(GameScene);
+var myApp = new cocos2dApp(SystemMenuScene);
