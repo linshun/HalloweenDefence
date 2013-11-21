@@ -8,6 +8,15 @@ var s_Bullet = "res/Shell.png";
 var s_HighBullet = "res/HighShell.png";
 var s_AttackRange = "res/AttackRange.png";
 
+
+var s_Lose = "res/Lose.png";
+var s_Start = "res/Start.png";
+var s_LoseBG = "res/LoseBG.png";
+var s_StartSelected = "res/StartSelected.png";
+var s_StartBG = "res/StartBG.png";
+var s_Win = "res/Win.png";
+var s_HalloweenDefence = "res/HalloweenDefence.png";
+
 var s_AttackEffect_mp3 = "res/Music/AttackEffect.mp3";
 var s_AttackEffect_ogg = "res/Music/AttackEffect.ogg";
 var s_AttackHighEffect_mp3 = "res/Music/AttackHighEffect.mp3";
@@ -16,6 +25,7 @@ var s_MonsterDie_mp3 = "res/Music/MonsterDie.mp3";
 var s_MonsterDie_ogg = "res/Music/MonsterDie.ogg";
 var s_MonsterAcross_mp3 = "res/Music/MonsterAcross.mp3";
 var s_MonsterAcross_ogg = "res/Music/MonsterAcross.ogg";
+
 
 
 var s_Monster = [
@@ -54,6 +64,14 @@ var g_resources = [
 
 	{src:s_TowerBall[0]},
 	{src:s_TowerBall[1]},
+
+    {src:s_Lose},
+    {src:s_Start},
+    {src:s_LoseBG},
+    {src:s_StartSelected},
+    {src:s_StartBG},
+    {src:s_Win},
+    {src:s_HalloweenDefence},
 
     //effect
 	{src:s_AttackEffect_mp3},
