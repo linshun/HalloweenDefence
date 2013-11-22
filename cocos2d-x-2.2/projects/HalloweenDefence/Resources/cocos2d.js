@@ -33,23 +33,25 @@
         showFPS:true,
         loadExtension:false,
         frameRate:60,
-        renderMode:1,       //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
+        renderMode:1, //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
         tag:'gameCanvas', //the dom element to run cocos2d on
         engineDir:'../cocos2d/',
         // engineDir:'http://172.100.104.159:8000/cocos2d/',
         //SingleEngineFile:'../../lib/Cocos2d-html5-v2.2.min.js',
         appFiles:[//'src/AppDelegate.js',
-			'src/GameLayer.js',
-			'src/GameMaps.js',
-			"src/Monster.js",
-			"src/Tower.js",
-			'src/resource.js',
-			"src/Quadtree.js"
-		]
+            'src/GameLayer.js',
+            'src/GameMaps.js',
+            "src/Monster.js",
+            "src/Tower.js",
+            'src/resource.js',
+            'src/SystemMenu.js',
+            'src/GameOver.js',
+            "src/Quadtree.js"
+        ]
 
     };
 
-    if(!d.createElement('canvas').getContext){
+    if (!d.createElement('canvas').getContext) {
         var s = d.createElement('div');
         s.innerHTML = '<h2>Your browser does not support HTML5 canvas!</h2>' +
             '<p>Google Chrome is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier.Click the logo to download.</p>' +

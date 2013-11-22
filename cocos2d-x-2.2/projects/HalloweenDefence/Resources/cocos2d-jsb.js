@@ -4,12 +4,14 @@ require("src/Monster.js");
 require("src/resource.js");
 require("src/Tower.js");
 require("src/GameLayer.js");
-require("src/QuadTree.js");
+require("src/Quadtree.js");
 
 // main entry
 try {
     director = cc.Director.getInstance();
     director.runWithScene(new GameScene());
     cc.EGLView.getInstance().setDesignResolutionSize(480, 318, cc.RESOLUTION_POLICY.SHOW_ALL);
-	
-} catch(e) {log(e);}
+
+} catch (e) {
+    log(e);
+}
