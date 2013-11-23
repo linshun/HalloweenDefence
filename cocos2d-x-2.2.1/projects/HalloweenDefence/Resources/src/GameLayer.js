@@ -171,8 +171,9 @@ var GameLayer = cc.Layer.extend({
         var remove = cc.CallFunc.create(function () {
             if (HD.SOUND) {
                 cc.AudioEngine.getInstance().playEffect(s_MonsterAcross_mp3);
-                cc.Director.getInstance().replaceScene(new GameOverScene(false));
             }
+                                        
+            cc.Director.getInstance().replaceScene(new GameOverScene(false));
 
             this.removeFromParent();
         }, monster);
