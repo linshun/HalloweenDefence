@@ -135,10 +135,10 @@ cc.Screen = cc.Class.extend({
         // Function bind will be too complicated here because we need the callback function's reference to remove the listener
         function callback() {
             theScreen.requestFullScreen(element, onFullScreenChange);
-            element.removeEventListener(theScreen._touchEvent, callback);
+            cc.canvas.removeEventListener(theScreen._touchEvent, callback);
         }
         this.requestFullScreen(element, onFullScreenChange);
-        element.addEventListener(this._touchEvent, callback);
+        cc.canvas.addEventListener(this._touchEvent, callback);
     }
 });
 
